@@ -132,7 +132,10 @@ Not found in the provided documents.
 ## Future Improvements
 - Add reranking  
 - Structured JSON outputs  
-- Logging 
+- Logging
+
+## Proud Of
+- Building complete RAG pipeline with grounding and prompt iteration.
 
 ## Next Improvements
 - Add reranking  
