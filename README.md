@@ -18,17 +18,18 @@ This project implements a small Retrieval-Augmented Generation (RAG) system for 
 - Google Colab  
 
 ## Folder Structure
-rag-mini-project/
-├── Notebook/
-│   └── rag_project.ipynb
-├── data/
-│   ├── Refund_Policy.docx
-│   ├── Cancellation_Policy.docx
-│   └── Shipping_Policy.docx
-└── README.md
+rag-mini-project/  
+├── Notebook/  
+│   └── rag_project.ipynb  
+├── data/  
+│   ├── Refund_Policy.docx  
+│   ├── Cancellation_Policy.docx  
+│   └── Shipping_Policy.docx  
+└── README.md  
 
 ## Data Preparation
-- Documents loaded using Docx2txtLoader  
+Documents are loaded automatically from the data folder using python-docx and converted into LangChain Document format.  
+
 - Chunk size: 500 characters  
 - Chunk overlap: 50 characters  
 
@@ -42,33 +43,34 @@ Balances semantic completeness with retrieval precision.
 4. Store in Chroma vector database  
 5. Retrieve top-k similar chunks  
 6. Generate answer from retrieved context  
+7. Persist vectors locally using ChromaDB  
 
 ## Prompt Engineering
 
-Prompt Version 1  
+### Prompt Version 1  
 Simple context + question format.
 
-Prompt Version 2 (Final)
+### Prompt Version 2 (Final)
 
 You are an AI assistant that answers strictly from company policy documents.
 
 Rules:
-1. Use ONLY the information in <context>.
-2. If answer not found, say:
-   Not found in the provided documents.
-3. Do NOT guess or use outside knowledge.
-4. Cite evidence.
+1. Use ONLY the information in <context>.  
+2. If answer not found, say:  
+   Not found in the provided documents.  
+3. Do NOT guess or use outside knowledge.  
+4. Cite evidence.  
 
-<context>
-{context}
-</context>
+<context>  
+{context}  
+</context>  
 
-Question:
-{question}
+Question:  
+{question}  
 
-Answer Format:
-- Answer:
-- Evidence:
+Answer Format:  
+- Answer:  
+- Evidence:  
 
 Improvement:  
 Prompt V2 restricts the model to retrieved context and reduces hallucinations.
@@ -78,6 +80,8 @@ Open-source model: google/flan-t5-base
 Used via HuggingFace Transformers.
 
 ## Evaluation
+
+Evaluation is implemented as a reusable function (run_evaluation).
 
 Question | Expected | Output | Score  
 What is the refund period? | 30 days | 30 days | ✅  
@@ -95,12 +99,15 @@ Not found in the provided documents.
 ## How to Run
 1. Open rag_project.ipynb in Google Colab  
 2. Install libraries  
-3. Upload documents  
+3. Place policy DOCX files inside:  
+   /content/drive/MyDrive/rag_project/data  
 4. Run cells sequentially  
 
 ## Key Trade-offs
-- Lightweight embeddings for speed  
+- Lightweight embeddings for speed vs accuracy  
+- ChromaDB chosen for simple local persistence  
 - No reranking for simplicity  
+- Single-notebook design prioritizes clarity over modularity  
 
 ## Future Improvements
 - Add reranking  
@@ -110,5 +117,6 @@ Not found in the provided documents.
 ## Proud Of
 Building complete RAG pipeline with grounding and prompt iteration.
 
-## Next Improvement
-Add reranking and output schema validation.
+## Next Improvements
+- Add reranking  
+- Output schema validation  
