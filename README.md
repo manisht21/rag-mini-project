@@ -28,7 +28,7 @@ rag-mini-project/
 └── README.md  
 
 ## Data Preparation
-Documents are loaded automatically from the data folder using python-docx and converted into LangChain Document format.  
+Documents are loaded automatically from the data folder using python-docx and converted into LangChain Document format.
 
 - Chunk size: 500 characters  
 - Chunk overlap: 50 characters  
@@ -83,13 +83,33 @@ Used via HuggingFace Transformers.
 
 Evaluation is implemented as a reusable function (run_evaluation).
 
-Question | Expected | Output | Score  
-What is the refund period? | 30 days | 30 days | ✅  
-International shipping time | 10-15 days | 10-15 days | ✅  
-Cancellation after shipping | No | No | ✅  
-Are digital products refundable | No | No | ✅  
-Do you ship to Germany | Not found | Partial | ⚠️  
-Payment gateway used | Not found | Partial | ⚠️  
+### Test Questions Used
+
+**Reasoning-Based**
+- Can I cancel my order after it is shipped?  
+- Are shipping fees refundable?  
+- How long does refund processing take after approval?  
+
+**Edge / Out-of-Scope**
+- Who is the CEO of the company?  
+- What is the company address?  
+
+**Policy Combination / Tricky**
+- Can I cancel within 1 hour of placing order?  
+- Are digital items eligible for refund?  
+- Which countries do you ship to?  
+
+### Sample Results
+
+Question | Expected Answer | System Output | Status  
+Can I cancel my order after it is shipped? | No | Once shipped, orders cannot be cancelled | ✅  
+Are shipping fees refundable? | No | Non-refundable | ✅  
+Refund processing time after approval | 7 business days | 7 business days | ✅  
+Who is the CEO of the company? | Not found | Not found | ✅  
+Company address | Not found | Not found | ✅  
+Cancel within 1 hour | Yes | Yes | ✅  
+Digital items refundable | No | Not eligible | ✅  
+Countries shipped to | USA, Canada, India | USA, Canada, India | ✅  
 
 ## Edge Case Handling
 If no relevant information is found:
@@ -112,10 +132,7 @@ Not found in the provided documents.
 ## Future Improvements
 - Add reranking  
 - Structured JSON outputs  
-- Logging  
-
-## Proud Of
-Building complete RAG pipeline with grounding and prompt iteration.
+- Logging 
 
 ## Next Improvements
 - Add reranking  
